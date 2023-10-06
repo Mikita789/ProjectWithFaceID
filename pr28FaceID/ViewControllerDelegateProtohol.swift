@@ -9,4 +9,5 @@ import Foundation
 
 protocol AppendElementProtocol{
     func updateElement(node: NodeModel, nodeData:NodeDataModel)
+    func fetchData()
 }

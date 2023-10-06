@@ -62,6 +62,7 @@ class CreateTextViewController: UIViewController {
         newNode.trueBody  = node.trueBody
         newNode.title = node.title
         newNode.isPrivate = node.isPrivate
+        newNode.id = node.id
         
         do{
             try context.save()

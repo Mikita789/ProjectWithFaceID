@@ -15,6 +15,7 @@ class NodeModel{
     var trueBody: String
     var falseBody: String
     var isPrivate:Bool = false
+    var id = UUID()
     
     init(title: String, date: Date, trueBody:String, falseBody:String) {
         self.title = title

@@ -20,6 +20,7 @@
 		380CB8F52ACEB00D008E41AF /* NetwManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380CB8F42ACEB00D008E41AF /* NetwManager.swift */; };
 		380CB8F72ACEB01E008E41AF /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380CB8F62ACEB01E008E41AF /* DataModel.swift */; };
 		380CB9202ACFD09D008E41AF /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 380CB91E2ACFD09D008E41AF /* CoreDataModel.xcdatamodeld */; };
+		380CB9252AD00AD3008E41AF /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380CB9242AD00AD3008E41AF /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		380CB8F42ACEB00D008E41AF /* NetwManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetwManager.swift; sourceTree = "<group>"; };
 		380CB8F62ACEB01E008E41AF /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		380CB91F2ACFD09D008E41AF /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		380CB9242AD00AD3008E41AF /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			children = (
 				380CB8DB2AC6C932008E41AF /* ViewController.swift */,
 				380CB8ED2AC6CAF7008E41AF /* TableViewCell.swift */,
+				380CB9242AD00AD3008E41AF /* DetailViewController.swift */,
 				380CB8EB2AC6CAC6008E41AF /* CreateTextViewController.swift */,
 			);
 			path = Views;
@@ -183,6 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				380CB9252AD00AD3008E41AF /* DetailViewController.swift in Sources */,
 				380CB8F22AC6F817008E41AF /* ViewControllerDelegateProtohol.swift in Sources */,
 				380CB8EE2AC6CAF7008E41AF /* TableViewCell.swift in Sources */,
 				380CB8DC2AC6C932008E41AF /* ViewController.swift in Sources */,

@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         
     }
     
-    private func fetchData(){
+    internal func fetchData(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         let req:NSFetchRequest<NodeDataModel> = NodeDataModel.fetchRequest()
@@ -55,11 +55,9 @@ class ViewController: UIViewController {
         let req:NSFetchRequest<NodeDataModel> = NodeDataModel.fetchRequest()
         
         do{
-            var items = try context.fetch(req)
+            let items = try context.fetch(req)
             for item in items{
-                if item.title == node.title &&
-                    item.trueBody == node.trueBody &&
-                    item.falseBody == node.falseBody{
+                if item.id == node.id{
                     context.delete(item)
                 }
             }
@@ -108,9 +106,19 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.currentNode = self.nodeData[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
 extension ViewController: AppendElementProtocol{
+    func updeteData() {
+        table.reloadData()
+    }
+    
     func updateElement(node: NodeModel, nodeData: NodeDataModel) {
         self.nodesArr.append(node)
         self.nodeData.append(nodeData)
