@@ -116,6 +116,7 @@ class DetailViewController: UIViewController {
         guard let trueBody = self.infoTextView.text else { return }
         self.currentNode?.trueBody = trueBody
         saveNewNode(newBody: trueBody)
+        navigationController?.popViewController(animated: true)
         //save new information
     }
     
