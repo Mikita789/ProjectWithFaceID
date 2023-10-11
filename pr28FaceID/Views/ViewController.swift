@@ -71,7 +71,9 @@ class ViewController: UIViewController {
     
     private func createNavBarButtons(){
         let buttonAdd = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonAction))
+        buttonAdd.tintColor = .black
         navigationItem.rightBarButtonItem = buttonAdd
+        
     }
     
     @objc func addButtonAction(){

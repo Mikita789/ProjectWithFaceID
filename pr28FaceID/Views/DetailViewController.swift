@@ -10,9 +10,11 @@ import CoreData
 
 class DetailViewController: UIViewController {
     let delegate: AppendElementProtocol? = nil
+    var originalFrame:CGRect!
     var infoTextView: UITextView!
     var saveButton: UIButton!
     var currentNode:NodeDataModel?
+    var privateState: Bool = false
     var currentEditingState = false{
         didSet{
             if currentEditingState == false{
@@ -45,6 +47,7 @@ class DetailViewController: UIViewController {
         createButtonNavBar()
         createSaveButton()
         buttonView()
+        registerForKeyboardNotifications()
 
     }
     
@@ -59,8 +62,9 @@ class DetailViewController: UIViewController {
             infoTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             infoTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
-        infoTextView.text = currentNode?.trueBody
-        infoTextView.isEditable = false 
+        infoTextView.text = self.privateState ? currentNode?.falseBody : currentNode?.trueBody
+        infoTextView.isEditable = false
+        infoTextView.font = .systemFont(ofSize: 25)
     }
     
     private func createButtonNavBar(){
@@ -121,9 +125,49 @@ class DetailViewController: UIViewController {
     }
     
     @objc func editButtonAction(){
-        self.infoTextView.isEditable = true
-        self.currentEditingState.toggle()
+        if !self.privateState{
+            self.infoTextView.isEditable = true
+            self.currentEditingState.toggle()
+        }
+//        self.infoTextView.isEditable = true
+//        self.currentEditingState.toggle()
     }
+    
+    private func registerForKeyboardNotifications() {
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+            guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+                return
+            }
+            
+            // Сохраняем исходное положение элементов
+            originalFrame = saveButton.frame
+            
+            // Получаем высоту клавиатуры
+            let keyboardHeight = keyboardFrame.height
+            
+            //если ищем пересечение двух UI элементов
+            if saveButton.frame.intersects(keyboardFrame){
+                UIView.animate(withDuration: 0.3) {
+                    let buttonOffset = self.saveButton.frame.maxY - keyboardFrame.minY
+                    self.saveButton.frame.origin.y = self.saveButton.frame.origin.y - buttonOffset - 20
+                    //self.saveButton.frame.origin.y = -(keyboardHeight - (self.view.frame.maxY - self.saveButton.frame.maxY))
+                    //keyboardHeight - (self.view.frame.maxY - self.buttonLogin.frame.maxY)
+                }
+            }
+        }
+        //когда клавиатура закрывается
+        @objc private func keyboardWillHide(_ notification: Notification) {
+            // Возвращаем элементы на исходное положение
+            UIView.animate(withDuration: 0.3) {
+                self.saveButton.frame = self.originalFrame
+            }
+        }
+
+
     
 
 }

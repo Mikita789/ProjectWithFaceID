@@ -29,8 +29,7 @@ class CreateTextViewController: UIViewController {
             self.currentJoke = res.joke ?? "Unknow joke"
         }
         createTextView()
-        saveNodeButton()
-        
+        saveNodeButton()        
         title = "Add new node"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -91,3 +90,7 @@ class CreateTextViewController: UIViewController {
         }
 
 }
+
+//extension CreateTextViewController: UITextViewDelegate{
+//    textView
+//}
