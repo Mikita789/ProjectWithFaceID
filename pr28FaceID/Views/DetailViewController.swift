@@ -7,6 +7,8 @@
 
 import UIKit
 import CoreData
+import LocalAuthentication
+
 
 class DetailViewController: UIViewController {
     let delegate: AppendElementProtocol? = nil
@@ -14,7 +16,7 @@ class DetailViewController: UIViewController {
     var infoTextView: UITextView!
     var saveButton: UIButton!
     var currentNode:NodeDataModel?
-    var privateState: Bool = false
+    var privateState: Bool = true
     var currentEditingState = false{
         didSet{
             if currentEditingState == false{
@@ -38,6 +40,40 @@ class DetailViewController: UIViewController {
                 self.saveButton.layer.cornerRadius = self.saveButton.frame.height / 2
             }
         }
+    }
+    let contextFaceID = LAContext()
+
+    
+    override func loadView() {
+        super.loadView()
+        var error:NSError?
+        if contextFaceID.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            contextFaceID.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Аутентификация с помощью Face ID") { (success, error) in
+                DispatchQueue.main.async {
+                    if success {
+                        // Аутентификация прошла успешно
+                        print("FaceID прошла успешно")
+                        self.privateState = false
+                        self.infoTextView.text = self.privateState ? self.currentNode?.falseBody : self.currentNode?.trueBody
+                    } else {
+                        // Аутентификация не удалась или была отменена пользователем
+                        self.privateState = true
+                    }
+                }
+//                if success {
+//                    // Аутентификация прошла успешно
+//                    print("FaceID прошла успешно")
+//                    self.privateState = false
+//                } else {
+//                    // Аутентификация не удалась или была отменена пользователем
+//                    self.privateState = true
+//                }
+            }
+        } else {
+            print("устройстов не поддерживает FaceID")
+            //нужно запросить пароль от устройства
+        }
+        
     }
 
     override func viewDidLoad() {
