@@ -47,6 +47,7 @@ class DetailViewController: UIViewController {
     override func loadView() {
         super.loadView()
         var error:NSError?
+        var errorPass: NSError?
         if contextFaceID.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             contextFaceID.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Аутентификация с помощью Face ID") { (success, error) in
                 DispatchQueue.main.async {
@@ -60,18 +61,25 @@ class DetailViewController: UIViewController {
                         self.privateState = true
                     }
                 }
-//                if success {
-//                    // Аутентификация прошла успешно
-//                    print("FaceID прошла успешно")
-//                    self.privateState = false
-//                } else {
-//                    // Аутентификация не удалась или была отменена пользователем
-//                    self.privateState = true
-//                }
             }
         } else {
             print("устройстов не поддерживает FaceID")
             //нужно запросить пароль от устройства
+            if contextFaceID.canEvaluatePolicy(.deviceOwnerAuthentication, error: &errorPass){
+                contextFaceID.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Введите пароль от устройства") { succ, error in
+                    if succ{
+                        DispatchQueue.main.async {
+                            print("Введен правильный пароль")
+                            self.privateState = false
+                            self.infoTextView.text = self.privateState ? self.currentNode?.falseBody : self.currentNode?.trueBody
+                        }
+                    }else{
+                        print("пароль введен неверно")
+                        self.privateState = true
+                    }
+                }
+            }
+            
         }
         
     }
